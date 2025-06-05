@@ -88,7 +88,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
                 <DollarSign className="w-5 h-5 text-purple-600" />
               </div>
             )}
-            <span className="text-lg font-semibold text-gray-900">{state.settings.companyName}</span>
+            <span 
+              className="font-bold"
+              style={{ color: `hsl(var(--brand-primary))` }}
+            >
+            {state.settings.companyName}</span>
           </div>
           <button
             onClick={() => setIsOpen(false)}
@@ -141,7 +145,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
         {/* Footer */}
         <div className="p-4 border-t border-gray-200">
           <div className="text-xs text-gray-500 text-center">
-            © 2024 {state.settings.companyName}
+            © 2025 {state.settings.companyName}
           </div>
         </div>
       </div>
