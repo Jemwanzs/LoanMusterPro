@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useLoanContext } from '../context/LoanContext';
 
