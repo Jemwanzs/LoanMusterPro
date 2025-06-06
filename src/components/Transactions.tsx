@@ -10,7 +10,7 @@ const Transactions: React.FC = () => {
   const tabs = [
     { id: 'record', label: 'Record Loan Repayment' },
     { id: 'interest', label: 'Interest Payments' },
-    { id: 'principal', label: 'Principal Payments' },
+    { id: 'principal', label: 'Principal Payments' }
   ];
 
   const renderContent = () => {

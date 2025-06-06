@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLoanContext, Loan } from '../context/LoanContext';
 import { ArrowLeft, Save, AlertCircle, CheckCircle } from 'lucide-react';
@@ -47,8 +46,9 @@ const EditLoan: React.FC<EditLoanProps> = ({ loan, onClose }) => {
     return date.toISOString().split('T')[0];
   };
 
-  const calculateInterest = (amount: number, interestRate: number, repaymentPeriodValue: number) => {
-    return amount * (interestRate / 100) * repaymentPeriodValue;
+  const calculateInterest = (amount: number, interestRate: number) => {
+    // Simple flat rate calculation: Interest = Principal × Interest Rate
+    return amount * (interestRate / 100);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -75,7 +75,9 @@ const EditLoan: React.FC<EditLoanProps> = ({ loan, onClose }) => {
       
       setFormData(prev => ({
         ...prev,
-        [name]: value,
+        [name]: name === 'repaymentPeriodValue' || name === 'amount' || name === 'interestRate' 
+          ? parseFloat(value) 
+          : value,
         dueDate: newDueDate
       }));
     }
@@ -85,11 +87,16 @@ const EditLoan: React.FC<EditLoanProps> = ({ loan, onClose }) => {
     e.preventDefault();
     
     try {
-      const newTotalInterest = calculateInterest(
-        formData.amount,
-        formData.interestRate,
-        formData.repaymentPeriodValue
-      );
+      const newTotalInterest = calculateInterest(formData.amount, formData.interestRate);
+
+      // Calculate how much has been repaid already
+      const repayments = state.repayments.filter(r => r.loanNumber === loan.loanNumber);
+      const principalRepaid = repayments.reduce((sum, r) => sum + r.principalAmount, 0);
+      const interestRepaid = repayments.reduce((sum, r) => sum + r.interestAmount, 0);
+
+      // Calculate new balances
+      const newPrincipalBalance = formData.amount - principalRepaid;
+      const newInterestBalance = newTotalInterest - interestRepaid;
 
       const updatedLoan: Loan = {
         ...loan,
@@ -102,8 +109,8 @@ const EditLoan: React.FC<EditLoanProps> = ({ loan, onClose }) => {
         interestRate: formData.interestRate,
         totalInterest: newTotalInterest,
         expectedRepaymentAmount: formData.amount + newTotalInterest,
-        principalBalance: formData.amount,
-        interestBalance: newTotalInterest,
+        principalBalance: Math.max(0, newPrincipalBalance),
+        interestBalance: Math.max(0, newInterestBalance),
         loanee: formData.loanee
       };
 
@@ -134,7 +141,8 @@ const EditLoan: React.FC<EditLoanProps> = ({ loan, onClose }) => {
     }).format(amount).replace('$', 'KES ');
   };
 
-  const totalInterest = calculateInterest(formData.amount, formData.interestRate, formData.repaymentPeriodValue);
+  // Calculate in real-time for the summary using the flat rate calculation
+  const totalInterest = calculateInterest(formData.amount, formData.interestRate);
   const expectedRepayment = formData.amount + totalInterest;
 
   return (

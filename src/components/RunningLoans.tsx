@@ -68,7 +68,11 @@ const RunningLoans: React.FC<RunningLoansProps> = ({ onViewStatement }) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Running Loans</h1>
+        <h1 className="text-3xl font-bold text-gray-900">
+          <span className="font-bold" style={{ color: state.settings.brandColor }}>
+            {state.settings.companyName}
+          </span> - Running Loans
+        </h1>
         <div className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
           {runningLoans.length} Active Loans
         </div>
@@ -201,7 +205,11 @@ const RunningLoans: React.FC<RunningLoansProps> = ({ onViewStatement }) => {
       {/* Summary */}
       {runningLoans.length > 0 && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Portfolio Summary</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <span className="font-bold" style={{ color: state.settings.brandColor }}>
+              {state.settings.companyName}
+            </span> - Portfolio Summary
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold text-blue-600">

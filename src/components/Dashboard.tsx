@@ -121,34 +121,33 @@ const Dashboard: React.FC = () => {
           //</div>
         //)}
       //</div>
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            <span 
-              className="font-bold"
-              style={{ color: `hsl(var(--brand-primary))` }}
-            >
-              {state.settings.companyName}
-            </span>
-          </h1>
-          <p className="text-gray-600 mt-1 text-sm">
-            {new Date().toLocaleDateString('en-US', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            })}
-          </p>
-        </div>
-        {overdueLoans.length > 0 && (
-          <div className="bg-red-100 border border-red-300 rounded-lg p-3">
-            <p className="text-red-800 font-medium text-sm">⚠️ {overdueLoans.length} overdue loans</p>
+      return (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                <span 
+                  className="font-bold"
+                  style={{ color: `hsl(var(--brand-primary))` }}
+                >
+                  {state.settings.companyName}
+                </span>
+              </h1>
+              <p className="text-gray-600 mt-1 text-sm">
+                {new Date().toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </p>
+            </div>
+            {overdueLoans.length > 0 && (
+              <div className="bg-red-100 border border-red-300 rounded-lg p-3">
+                <p className="text-red-800 font-medium text-sm">⚠️ {overdueLoans.length} overdue loans</p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {summaryCards.map((card, index) => (

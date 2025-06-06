@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useLoanContext } from '../context/LoanContext';
 
@@ -47,7 +48,26 @@ const BrandThemeProvider: React.FC<BrandThemeProviderProps> = ({ children }) => 
     root.style.setProperty('--brand-hover', `${h} ${s}% ${Math.max(l - 10, 10)}%`);
     root.style.setProperty('--brand-light', `${h} ${Math.max(s - 20, 20)}% ${Math.min(l + 30, 95)}%`);
     
-  }, [state.settings.brandColor]);
+    // Add CSS for company name styling
+    const style = document.createElement('style');
+    style.textContent = `
+      .company-name {
+        font-weight: bold;
+        color: ${brandColor};
+      }
+    `;
+    
+    // Remove any previously added style tag
+    const existingStyle = document.getElementById('brand-styles');
+    if (existingStyle) {
+      existingStyle.remove();
+    }
+    
+    // Add new style tag
+    style.id = 'brand-styles';
+    document.head.appendChild(style);
+    
+  }, [state.settings.brandColor, state.settings.companyName]);
 
   return <>{children}</>;
 };

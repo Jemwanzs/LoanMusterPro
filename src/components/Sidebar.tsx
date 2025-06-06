@@ -16,7 +16,8 @@ import {
   LogOut,
   Banknote,
   PiggyBank,
-  DollarSign
+  DollarSign,
+  Upload
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -53,6 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
     { id: 'running-loans', label: 'Running Loans', icon: Clock },
     { id: 'repaid-loans', label: 'Repaid Loans', icon: CheckCircle },
     { id: 'loanee-management', label: 'Loanee Management', icon: Users },
+    { id: 'bulk-uploads', label: 'Bulk Uploads', icon: Upload },
     { id: 'reports', label: 'Reports', icon: BarChart3 },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
@@ -89,10 +91,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
               </div>
             )}
             <span 
-              className="font-bold"
-              style={{ color: `hsl(var(--brand-primary))` }}
+              className="text-lg font-bold"
+              style={{ color: state.settings.brandColor }}
             >
-            {state.settings.companyName}</span>
+              {state.settings.companyName}
+            </span>
           </div>
           <button
             onClick={() => setIsOpen(false)}
@@ -144,8 +147,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isOpen, 
 
         {/* Footer */}
         <div className="p-4 border-t border-gray-200">
-          <div className="text-xs text-gray-500 text-center">
-            © 2025 {state.settings.companyName}
+          <div 
+            className="text-xs font-bold text-center"
+            style={{ color: state.settings.brandColor }}
+          >
+            © 2024 {state.settings.companyName}
           </div>
         </div>
       </div>

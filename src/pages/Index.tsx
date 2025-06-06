@@ -11,6 +11,7 @@ import Reports from '../components/Reports';
 import Settings from '../components/Settings';
 import LoaneeManagement from '../components/LoaneeManagement';
 import LoanStatement from '../components/LoanStatement';
+import BulkUploadsPage from '../components/BulkUploadsPage';
 import BrandThemeProvider from '../components/BrandThemeProvider';
 import { LoanProvider } from '../context/LoanContext';
 
@@ -69,6 +70,8 @@ const Index = () => {
         return <RepaidLoans onViewStatement={setSelectedLoanForStatement} />;
       case 'loanee-management':
         return <LoaneeManagement />;
+      case 'bulk-uploads':
+        return <BulkUploadsPage />;
       case 'reports':
         return <Reports />;
       case 'settings':

@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLoanContext } from '../context/LoanContext';
 import LoaneeManagement from './LoaneeManagement';
-import BulkUpload from './BulkUpload';
-import { Settings as SettingsIcon, Users, CreditCard, Building, Save, Upload } from 'lucide-react';
+import { Settings as SettingsIcon, Users, CreditCard, Building, Save } from 'lucide-react';
 
 const Settings: React.FC = () => {
   const { state, dispatch } = useLoanContext();
@@ -58,7 +56,6 @@ const Settings: React.FC = () => {
     { id: 'loanees', label: 'Loanees', icon: Users },
     { id: 'loan-types', label: 'Loan Types', icon: CreditCard },
     { id: 'company', label: 'Company', icon: Building },
-    { id: 'bulk-upload', label: 'Bulk Upload', icon: Upload },
   ];
 
   const handleSave = () => {
@@ -118,17 +115,6 @@ const Settings: React.FC = () => {
     switch (activeTab) {
       case 'loanees':
         return <LoaneeManagement />;
-      
-      case 'bulk-upload':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-900">Bulk Upload</h2>
-            <div className="space-y-6">
-              <BulkUpload type="loans" />
-              <BulkUpload type="repayments" />
-            </div>
-          </div>
-        );
       
       case 'loan-types':
         return (
@@ -232,7 +218,8 @@ const Settings: React.FC = () => {
                   type="text"
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent text-sm font-bold"
+                  style={{ color: formData.brandColor }}
                 />
               </div>
               <div>
@@ -284,6 +271,7 @@ const Settings: React.FC = () => {
                       <p>Total Loans: {(state.loans || []).length}</p>
                       <p>Total Loanees: {(state.loanees || []).length}</p>
                       <p>Total Repayments: {(state.repayments || []).length}</p>
+                      <p className="mt-2">Company: <span className="font-bold" style={{ color: state.settings.brandColor }}>{state.settings.companyName}</span></p>
                     </div>
                   </div>
                 </div>
